@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### keezna-service-stdfolio project ###
+application.yml
+application.properties
+
