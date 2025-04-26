@@ -1,4 +1,4 @@
-package com.keezna.stdfolio.controller;
+package com.keezna.webfolio.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

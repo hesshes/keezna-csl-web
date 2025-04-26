@@ -1,10 +1,10 @@
-package com.keezna.stdfolio;
+package com.keezna.webfolio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class KeeznaServiceStdfolioApplicationTests {
+class KeeznaServiceWebfolioApplicationTests {
 
 	@Test
 	void contextLoads() {

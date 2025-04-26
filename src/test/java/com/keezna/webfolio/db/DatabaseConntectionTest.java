@@ -1,4 +1,4 @@
-package com.keezna.stdfolio.db;
+package com.keezna.webfolio.db;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
