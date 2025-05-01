@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @SpringBootTest
 public class DataSourceTest {
 
@@ -18,11 +21,12 @@ public class DataSourceTest {
 
     @Test
     void testDataSourceConnection() {
-        assertNotNull(dataSource, "DataSource should not be null");
+        assertNotNull(dataSource);
+        log.info("DataSource: {}", dataSource);
 
         try (Connection connection = dataSource.getConnection()) {
-            assertNotNull(connection, "Connection should not be null");
-            System.out.println("Successfully connected to the database!");
+            assertNotNull(connection);
+            log.info("connection : {}", connection);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to connect to the database", e);
