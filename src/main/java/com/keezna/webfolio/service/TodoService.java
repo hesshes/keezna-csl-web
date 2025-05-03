@@ -12,10 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class TodoService {
 
-    public Long register(TodoDTO todoDTO) {
+	public Long register(TodoDTO todoDTO) {
 
-        log.info("................");
-        return null;
-    }
+		log.info("................");
+		return null;
+	}
 
 }

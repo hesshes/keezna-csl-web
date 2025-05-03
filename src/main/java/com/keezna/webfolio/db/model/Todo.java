@@ -24,16 +24,16 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Todo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tno;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long tno;
 
-    private String title;
+	private String title;
 
-    private boolean compelete;
+	private boolean compelete;
 
-    private LocalDate dueDate;
+	private LocalDate dueDate;
 
-    private String writer;
+	private String writer;
 
 }

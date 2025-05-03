@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TodoDTO {
 
-    private Long tno;
-    private String title;
-    private String wirter;
-    private boolean complete;
+	private Long tno;
+	private String title;
+	private String wirter;
+	private boolean complete;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dueDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDate dueDate;
 
 }
