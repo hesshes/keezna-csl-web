@@ -14,10 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TodoDTO {
-
 	private Long tno;
 	private String title;
-	private String wirter;
+	private String writer;
 	private boolean complete;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
