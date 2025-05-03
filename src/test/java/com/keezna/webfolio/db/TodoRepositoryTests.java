@@ -8,6 +8,10 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.keezna.webfolio.db.model.Todo;
@@ -51,6 +55,23 @@ public class TodoRepositoryTests {
         todo.setDueDate(LocalDate.of(2023, 10, 10));
 
         todoRepository.save(todo);
+    }
+
+    @Test
+    public void testDelete() {
+        Long tno = 1L;
+        todoRepository.deleteById(tno);
+    }
+
+    @Test
+    public void testPaging() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("tno").descending());
+
+        Page<Todo> result = todoRepository.findAll(pageable);
+        log.info("total {}", result.getTotalElements());
+
+        result.getContent().stream().forEach(todo -> log.info("todo {}", todo));
+
     }
 
 }
