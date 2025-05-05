@@ -59,7 +59,7 @@ public class TodoService {
 		todoRepo.deleteById(tno);
 	}
 
-	public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO) {
+	public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
 		Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1,
 				pageRequestDTO.getSize(), Sort.by("tno").descending());
 		Page<Todo> result = todoRepo.findAll(pageable);

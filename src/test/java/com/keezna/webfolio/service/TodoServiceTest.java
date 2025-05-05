@@ -42,7 +42,7 @@ public class TodoServiceTest {
 	public void testList() {
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(2)
 				.size(10).build();
-		PageResponseDTO<TodoDTO> response = todoService.list(pageRequestDTO);
+		PageResponseDTO<TodoDTO> response = todoService.getList(pageRequestDTO);
 		assertNotNull(response);
 		log.info("response: {}", response);
 
