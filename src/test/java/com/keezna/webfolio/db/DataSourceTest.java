@@ -16,21 +16,20 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 public class DataSourceTest {
 
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private DataSource dataSource;
 
-    @Test
-    void testDataSourceConnection() {
-        assertNotNull(dataSource);
-        log.info("DataSource: {}", dataSource);
-
-        try (Connection connection = dataSource.getConnection()) {
-            assertNotNull(connection);
-            log.info("connection : {}", connection);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to connect to the database", e);
-        }
-    }
+	@Test
+	void testDataSourceConnection() {
+		assertNotNull(dataSource);
+		log.info("DataSource: {}", dataSource);
+		try (Connection connection = dataSource.getConnection()) {
+			assertNotNull(connection);
+			log.info("connection : {}", connection);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Failed to connect to the database", e);
+		}
+	}
 
 }

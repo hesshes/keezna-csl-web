@@ -3,6 +3,7 @@ package com.keezna.webfolio.db;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.keezna.webfolio.db.dto.TodoDTO;
 import com.keezna.webfolio.db.model.Todo;
 import com.keezna.webfolio.db.repository.TodoRepository;
 
