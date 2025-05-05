@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.keezna.webfolio.db.dto.PageRequestDTO;
+import com.keezna.webfolio.db.dto.PageResponseDTO;
 import com.keezna.webfolio.db.dto.TodoDTO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,16 @@ public class TodoServiceTest {
 		Long tno = 10L;
 		TodoDTO todoDto = todoService.getTodo(tno);
 		log.info("todoDTO : {}", todoDto);
+	}
+
+	@Test
+	public void testList() {
+		PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(2)
+				.size(10).build();
+		PageResponseDTO<TodoDTO> response = todoService.list(pageRequestDTO);
+		assertNotNull(response);
+		log.info("response: {}", response);
+
 	}
 
 }

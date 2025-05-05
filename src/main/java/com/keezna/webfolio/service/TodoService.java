@@ -1,9 +1,18 @@
 package com.keezna.webfolio.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.keezna.webfolio.db.dto.PageRequestDTO;
+import com.keezna.webfolio.db.dto.PageResponseDTO;
 import com.keezna.webfolio.db.dto.TodoDTO;
 import com.keezna.webfolio.db.model.Todo;
 import com.keezna.webfolio.db.repository.TodoRepository;
@@ -48,5 +57,22 @@ public class TodoService {
 
 	public void remove(Long tno) {
 		todoRepo.deleteById(tno);
+	}
+
+	public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO) {
+		Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1,
+				pageRequestDTO.getSize(), Sort.by("tno").descending());
+		Page<Todo> result = todoRepo.findAll(pageable);
+		List<TodoDTO> dtoList = result.getContent().stream()
+				.map(todo -> modelMapper.map(todo, TodoDTO.class))
+				.collect(Collectors.toList());
+
+		long totalCount = result.getTotalElements();
+		PageResponseDTO<TodoDTO> responseDTO = PageResponseDTO
+				.<TodoDTO>withAll().dtoList(dtoList)
+				.pageRequestDTO(pageRequestDTO).totalCount(totalCount).build();
+
+		return responseDTO;
+
 	}
 }
