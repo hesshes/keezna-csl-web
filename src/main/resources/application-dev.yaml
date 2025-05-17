@@ -17,6 +17,14 @@ spring:
         format_sql: true
         highlight_sql: true
 
+  servlet:
+    multipart:
+      max-request-size: 30MB
+      max-file-size: 10MB
+
+keezna:
+  upload:
+    path: c:\Temp\upload
 
 logging:
   level:
