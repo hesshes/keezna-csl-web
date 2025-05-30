@@ -45,10 +45,10 @@ public class ProductController {
 	}
 
 	@GetMapping("/view/{fileName}")
-//	public ResponseEntity<Resource> viewFileGet(@PathVariable("fileName") String fileName) {
-	public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName) {
+	public ResponseEntity<Resource> viewFileGet(@PathVariable("fileName") String fileName) {
 		log.info(fileName);
 		ResponseEntity<Resource> res = fileUtil.getFile(fileName);
 		return res;
 	}
+
 }

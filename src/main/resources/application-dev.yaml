@@ -27,7 +27,6 @@ keezna:
     path: c:\Temp\upload
 
 logging:
-  level:
     org:
       hibernate:
         SQL: INFO

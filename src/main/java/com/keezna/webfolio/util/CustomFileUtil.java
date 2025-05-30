@@ -42,8 +42,7 @@ public class CustomFileUtil {
 		log.info("uploadPath : {}", uploadPath);
 	}
 
-	public List<String> saveFiles(List<MultipartFile> files)
-			throws RuntimeException {
+	public List<String> saveFiles(List<MultipartFile> files) throws RuntimeException {
 
 		if (files == null || files.size() == 0) {
 			return List.of();
@@ -52,8 +51,7 @@ public class CustomFileUtil {
 		List<String> uploadNames = new ArrayList<>();
 
 		for (MultipartFile mf : files) {
-			String savedName = UUID.randomUUID().toString() + "_"
-					+ mf.getOriginalFilename();
+			String savedName = UUID.randomUUID().toString() + "_" + mf.getOriginalFilename();
 
 			Path savePath = Paths.get(uploadPath, savedName);
 
@@ -61,11 +59,9 @@ public class CustomFileUtil {
 				Files.copy(mf.getInputStream(), savePath);
 				String contentType = mf.getContentType();
 				if (contentType != null && contentType.startsWith("image")) {
-					Path thumbnailPath = Paths.get(uploadPath,
-							"s_" + savedName);
+					Path thumbnailPath = Paths.get(uploadPath, "s_" + savedName);
 
-					Thumbnails.of(savePath.toFile()).size(200, 200)
-							.toFile(thumbnailPath.toFile());
+					Thumbnails.of(savePath.toFile()).size(200, 200).toFile(thumbnailPath.toFile());
 				}
 
 				uploadNames.add(savedName);
@@ -77,21 +73,36 @@ public class CustomFileUtil {
 	}
 
 	public ResponseEntity<Resource> getFile(String fileName) {
-		Resource resource = new FileSystemResource(
-				uploadPath + File.separator + fileName);
+		Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
 		if (!resource.isReadable()) {
-			resource = new FileSystemResource(
-					uploadPath + File.separator + "aaa.png");
+			resource = new FileSystemResource(uploadPath + File.separator + "aaa.png");
 		}
 
 		HttpHeaders headers = new HttpHeaders();
 
 		try {
-			headers.add("Content-Type",
-					Files.probeContentType(resource.getFile().toPath()));
+			headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().build();
 		}
 		return ResponseEntity.ok().headers(headers).body(resource);
+	}
+
+	public void deleteFiles(List<String> fileNames) {
+		if(fileNames == null || fileNames.size() == 0){
+			return;
+		}
+		fileNames.forEach(fileName -> {
+			String thumbnailFileName = "s_" + fileName;
+			Path thumbnailPath = Paths.get(uploadPath, thumbnailFileName);
+			Path filePath = Paths.get(uploadPath, fileName);
+			try {
+				Files.deleteIfExists(filePath);
+				Files.deleteIfExists(thumbnailPath);
+			} catch (Exception e) {
+				throw new RuntimeException(e.getMessage());
+			}
+			
+		});
 	}
 }
