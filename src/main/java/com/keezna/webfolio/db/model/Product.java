@@ -11,10 +11,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
+@Getter
 @Table(name = "tbl_product")
 @ToString(exclude = "imageList")
 @Builder
@@ -48,6 +50,10 @@ public class Product {
 
 	public void changeName(String name) {
 		this.pname = name;
+	}
+
+	public void changeDel(boolean delFlag) {
+		this.delFlag = delFlag;
 	}
 
 	public void addImage(ProductImage image) {
