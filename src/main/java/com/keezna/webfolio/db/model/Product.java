@@ -40,7 +40,7 @@ public class Product {
 	@Builder.Default
 	private List<ProductImage> imageList = new ArrayList<>();
 
-	public void chagePrice(int price) {
+	public void changePrice(int price) {
 		this.price = price;
 	}
 
