@@ -24,7 +24,6 @@ import com.keezna.webfolio.util.CustomFileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
 @RestController
