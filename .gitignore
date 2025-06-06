@@ -39,3 +39,6 @@ out/
 application.yml
 application.properties
 
+## gradle ##
+.gradle
+.gradle/*
