@@ -4,7 +4,7 @@ server:
     accesslog:
       enabled: true
       pattern: '%h %l %u %t "%r" %s %b'
-      directory: c:/Temp/upload
+      directory: c:/Temp/logs/tomcat
       prefix: access_log
 
 spring:
