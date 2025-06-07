@@ -39,12 +39,10 @@ public class ProductRepositoryTests {
 	@Test
 	public void testInsert() {
 		for (int i = 0; i < 10; i++) {
-			Product product = Product.builder().pname("상품" + i).price(100 * i)
-					.pdesc("상품설명 " + i).build();
-			product.addImageString(
-					UUID.randomUUID().toString() + "_" + "IMAGE1.jpg");
-			product.addImageString(
-					UUID.randomUUID().toString() + "_" + "IMAGE2.jpg");
+			Product product = Product.builder().pname("상품" + i).price(100 * i).pdesc("상품설명 " + i)
+					.build();
+			product.addImageString(UUID.randomUUID().toString() + "_" + "IMAGE1.jpg");
+			product.addImageString(UUID.randomUUID().toString() + "_" + "IMAGE2.jpg");
 
 			productRepository.save(product);
 
@@ -102,12 +100,9 @@ public class ProductRepositoryTests {
 
 		product.clearList();
 
-		product.addImageString(
-				UUID.randomUUID().toString() + "_" + "NJEWIMAGE1.jpg");
-		product.addImageString(
-				UUID.randomUUID().toString() + "_" + "NJEWIMAGE2.jpg");
-		product.addImageString(
-				UUID.randomUUID().toString() + "_" + "NJEWIMAGE3.jpg");
+		product.addImageString(UUID.randomUUID().toString() + "_" + "NJEWIMAGE1.jpg");
+		product.addImageString(UUID.randomUUID().toString() + "_" + "NJEWIMAGE2.jpg");
+		product.addImageString(UUID.randomUUID().toString() + "_" + "NJEWIMAGE3.jpg");
 
 		productRepository.save(product);
 

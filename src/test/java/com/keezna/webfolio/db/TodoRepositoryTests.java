@@ -37,9 +37,8 @@ public class TodoRepositoryTests {
 	@Test
 	public void testInsert() {
 		for (int i = 1; i <= 100; i++) {
-			Todo todo = Todo.builder().title("Title...." + i)
-					.dueDate(LocalDate.of(2023, 12, 31)).writer("user00")
-					.build();
+			Todo todo = Todo.builder().title("Title...." + i).dueDate(LocalDate.of(2023, 12, 31))
+					.writer("user00").build();
 			todoRepository.save(todo);
 		}
 	}
@@ -71,8 +70,8 @@ public class TodoRepositoryTests {
 
 	@Test
 	public void testGet() {
-		Todo todo = todoRepository.findById(3L).orElseThrow(
-				() -> new IllegalArgumentException("Value not found"));
+		Todo todo = todoRepository.findById(3L)
+				.orElseThrow(() -> new IllegalArgumentException("Value not found"));
 		assertNotNull(todo);
 		log.info("todo : {}", todo);
 	}

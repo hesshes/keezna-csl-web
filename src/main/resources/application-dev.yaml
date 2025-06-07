@@ -1,5 +1,12 @@
 server:
   port: 9090 
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: '%h %l %u %t "%r" %s %b'
+      directory: c:/Temp/upload
+      prefix: access_log
+
 spring:
   datasource:
     url: jdbc:mysql://mysql.keezna.mooo.com:50000/folio
@@ -33,3 +40,5 @@ logging:
         orm:
           jdbc:
             bind: TRACE
+
+
