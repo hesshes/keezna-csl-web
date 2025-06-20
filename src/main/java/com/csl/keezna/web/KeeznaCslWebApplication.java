@@ -1,13 +1,13 @@
-package com.keezna.stdfolio;
+package com.csl.keezna.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KeeznaServiceStdfolioApplication {
+public class KeeznaCslWebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KeeznaServiceStdfolioApplication.class, args);
+		SpringApplication.run(KeeznaCslWebApplication.class, args);
 	}
 
 }
