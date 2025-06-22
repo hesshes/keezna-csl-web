@@ -34,11 +34,13 @@ keezna:
     path: c:\Temp\upload
 
 logging:
+  level:
     org:
       hibernate:
         SQL: INFO
         orm:
           jdbc:
             bind: TRACE
-
-
+      springframework:
+        security:
+          web: trace
