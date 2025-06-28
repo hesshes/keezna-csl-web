@@ -44,10 +44,10 @@ public class MemberRepositoryTests {
 		}
 	}
 
-	@AfterAll
-	public void testDeleteMemberTable() {
-		memberRepository.deleteAll();
-	}
+//	@AfterAll
+//	public void testDeleteMemberTable() {
+//		memberRepository.deleteAll();
+//	}
 
 	@Test
 	public void testRead() {

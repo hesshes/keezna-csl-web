@@ -9,9 +9,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.csl.keezna.web.security.filter.JWTCheckFilter;
+import com.csl.keezna.web.security.handler.APILoginFailHandler;
+import com.csl.keezna.web.security.handler.APILoginSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
 
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		log.info("====================== Security Config ======================");
 		http.cors(httpSecurityCorsConfigurer -> {
@@ -30,6 +36,13 @@ public class CustomSecurityConfig {
 		http.sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		http.csrf(config -> config.disable());
 
+		http.formLogin(config -> {
+			config.loginPage("/api/member/login");
+			config.successHandler(new APILoginSuccessHandler());
+			config.failureHandler(new APILoginFailHandler());
+		});
+
+		http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 
