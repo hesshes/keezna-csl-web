@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,14 +53,15 @@ public class ProductController {
 		return Map.of("RESULT", pno);
 	}
 
+	@PreAuthorize("hasAnyzRole('ROLE_USER', 'ROLE_ADMIN')")
 	@GetMapping("/list")
 	public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO) {
+		log.info("list...................." + pageRequestDTO);
 		return productService.getList(pageRequestDTO);
 	}
 
 	@GetMapping("/view/{fileName}")
-	public ResponseEntity<Resource> viewFileGet(
-			@PathVariable("fileName") String fileName) {
+	public ResponseEntity<Resource> viewFileGet(@PathVariable("fileName") String fileName) {
 		log.info(fileName);
 		ResponseEntity<Resource> res = fileUtil.getFile(fileName);
 		return res;
@@ -71,8 +73,7 @@ public class ProductController {
 	}
 
 	@PutMapping("/{pno}")
-	public Map<String, String> modify(@PathVariable(name = "pno") Long pno,
-			ProductDTO productDTO) {
+	public Map<String, String> modify(@PathVariable(name = "pno") Long pno, ProductDTO productDTO) {
 		productDTO.setPno(pno);
 		ProductDTO oldProductDTO = productService.get(pno);
 
@@ -84,8 +85,7 @@ public class ProductController {
 
 		List<String> uploadFileNames = productDTO.getUploadFileNames();
 
-		if (currentUploadFileNames != null
-				&& currentUploadFileNames.size() > 0) {
+		if (currentUploadFileNames != null && currentUploadFileNames.size() > 0) {
 			uploadFileNames.addAll(currentUploadFileNames);
 		}
 
@@ -102,8 +102,7 @@ public class ProductController {
 
 	@DeleteMapping("/{pno}")
 	public Map<String, String> remove(@PathVariable(name = "pno") Long pno) {
-		List<String> oldFileNames = productService.get(pno)
-				.getUploadFileNames();
+		List<String> oldFileNames = productService.get(pno).getUploadFileNames();
 		productService.remove(pno);
 
 		fileUtil.deleteFiles(oldFileNames);

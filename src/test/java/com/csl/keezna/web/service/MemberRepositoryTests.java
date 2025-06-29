@@ -27,23 +27,24 @@ public class MemberRepositoryTests {
 	@Autowired
 	private PasswordEncoder passwordEncorder;
 
-	@BeforeAll
-	public void testInsertMember() {
-		for (int i = 0; i < 10; i++) {
-			Member member = Member.builder().email("user" + i + "@aaa.com")
-					.pw(passwordEncorder.encode("1111")).nickname("USER" + i).build();
-			member.addRole(MemberRole.USER);
-			if (i >= 5) {
-				member.addRole(MemberRole.MANAGER);
-			}
-			if (i >= 8) {
-				member.addRole(MemberRole.ADMIN);
-			}
-			log.info("===== email : {} ", member.getEmail());
-			memberRepository.save(member);
-		}
-	}
-
+//	@BeforeAll
+//	public void testInsertMember() {
+//		for (int i = 0; i < 10; i++) {
+//			Member member = Member.builder().email("user" + i + "@aaa.com")
+//					.pw(passwordEncorder.encode("1111")).nickname("USER" + i).build();
+//			member.addRole(MemberRole.USER);
+//			
+//			if (i >= 5) {
+//				member.addRole(MemberRole.MANAGER);
+//			}
+//			if (i >= 8) {
+//				member.addRole(MemberRole.ADMIN);
+//			}
+//			log.info("===== email : {} ", member.getEmail());
+//			memberRepository.save(member);
+//		}
+//	}
+//
 //	@AfterAll
 //	public void testDeleteMemberTable() {
 //		memberRepository.deleteAll();
@@ -54,7 +55,26 @@ public class MemberRepositoryTests {
 		String email = "user9@aaa.com";
 		Member member = memberRepository.getWithRoles(email);
 		log.info("===== member : {}", member);
+		log.info("===== member.role : {}", member.getMemberRoleList());
 
 	}
+	
+	@Test
+	public void testInsertMember() {
+	for (int i = 0; i < 10; i++) {
+		Member member = Member.builder().email("user" + i + "@aaa.com")
+				.pw(passwordEncorder.encode("1111")).nickname("USER" + i).build();
+		member.addRole(MemberRole.USER);
+		
+		if (i >= 5) {
+			member.addRole(MemberRole.MANAGER);
+		}
+		if (i >= 8) {
+			member.addRole(MemberRole.ADMIN);
+		}
+		log.info("===== email : {} ", member.getEmail());
+		memberRepository.save(member);
+	}
+}
 
 }
