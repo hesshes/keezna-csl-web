@@ -2,10 +2,14 @@ package com.csl.keezna.web.security.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.csl.keezna.web.db.dto.MemberDTO;
 import com.csl.keezna.web.util.JWTUtil;
 import com.google.gson.Gson;
 
@@ -39,19 +43,36 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		return false;
 	}
 
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain) throws ServletException, IOException {
 		log.info("JWTCHeckFilter =============================================");
 
 		String authHeaderStr = request.getHeader("Authorization");
 
 		log.info("==================authHeaderStr : {}", authHeaderStr);
 		try {
-			//Bearer accesToken
+			// Bearer accesToken
 			String accessToken = authHeaderStr.substring(7);
 			Map<String, Object> claims = JWTUtil.validateToken(accessToken);
 
 			log.info("==========JWT claims : {}", claims);
+
+			String email = String.valueOf(claims.get("email"));
+			String pw = String.valueOf(claims.get("pw"));
+			String nickname = String.valueOf(claims.get("nickname"));
+			Boolean social = (Boolean) claims.get("social");
+			List<String> roleNames = (List<String>) claims.get("roleNames");
+
+			MemberDTO memberDTO = new MemberDTO(email, pw, nickname, social.booleanValue(),
+					roleNames);
+
+			log.info("============================================================");
+			log.info("memberDTO : {} ", memberDTO);
+			log.info("memberDTO.getAuthorities() : {}", memberDTO.getAuthorities());
+
+			UsernamePasswordAuthenticationToken authenticationToke = new UsernamePasswordAuthenticationToken(
+					memberDTO, pw, memberDTO.getAuthorities());
+			SecurityContextHolder.getContext().setAuthentication(authenticationToke);
 
 			filterChain.doFilter(request, response);
 
