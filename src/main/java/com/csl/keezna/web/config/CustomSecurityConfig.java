@@ -17,6 +17,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.csl.keezna.web.security.filter.JWTCheckFilter;
 import com.csl.keezna.web.security.handler.APILoginFailHandler;
 import com.csl.keezna.web.security.handler.APILoginSuccessHandler;
+import com.csl.keezna.web.security.handler.CustomAccessDeniedHandler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,10 @@ public class CustomSecurityConfig {
 		});
 
 		http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		http.exceptionHandling(config -> {
+			config.accessDeniedHandler(new CustomAccessDeniedHandler());
+		});
 		return http.build();
 	}
 
