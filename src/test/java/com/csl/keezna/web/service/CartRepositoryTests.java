@@ -1,12 +1,15 @@
 package com.csl.keezna.web.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.csl.keezna.web.db.dto.CartItemListDTO;
 import com.csl.keezna.web.db.model.Cart;
 import com.csl.keezna.web.db.model.CartItem;
 import com.csl.keezna.web.db.model.Member;
@@ -14,6 +17,7 @@ import com.csl.keezna.web.db.model.Product;
 import com.csl.keezna.web.db.repository.CartItemRepository;
 import com.csl.keezna.web.db.repository.CartRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,6 +32,8 @@ public class CartRepositoryTests {
 	private CartItemRepository cartItemRepository;
 
 	@Test
+	@Commit
+	@Transactional
 	public void testInsertByProduct() {
 		log.info("test1--------------------------------");
 		String email = "user1@aaa.com";
@@ -65,4 +71,25 @@ public class CartRepositoryTests {
 		cartItemRepository.save(cartItem);
 	}
 
+	@Test
+	@Commit
+	public void testUpdateByCino() {
+		Long cino = 1L;
+		int qty = 4;
+
+		Optional<CartItem> result = cartItemRepository.findById(cino);
+		CartItem cartItem = result.orElseThrow();
+		cartItem.setQty(qty);
+		cartItemRepository.save(cartItem);
+	}
+
+	@Test
+	public void testListOfMember() {
+		String email = "user1@aaa.com";
+		List<CartItemListDTO> cartItemList = cartItemRepository.getItemOfCartDTOByEmail(email);
+
+		for (CartItemListDTO dto : cartItemList) {
+			log.info("dto : {}", dto);
+		}
+	}
 }
